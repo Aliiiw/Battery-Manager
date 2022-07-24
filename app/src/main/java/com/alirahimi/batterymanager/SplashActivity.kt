@@ -4,17 +4,21 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import com.alirahimi.batterymanager.databinding.ActivitySplashBinding
 import java.util.*
 import kotlin.concurrent.timerTask
 
 class SplashActivity : AppCompatActivity() {
-    lateinit var tempText: TextView
+
+    private lateinit var binding: ActivitySplashBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+        binding = ActivitySplashBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        tempText = findViewById(R.id.splash_text)
 
         val quotes = arrayOf("What are you looking for?", "Almost Done!", "Let's Go")
 
@@ -33,7 +37,7 @@ class SplashActivity : AppCompatActivity() {
     private fun textGenerator(delayTime: Long, textToShow: String) {
         Timer().schedule(timerTask {
             runOnUiThread(timerTask {
-                tempText.text = textToShow
+                binding.splashText.text = textToShow
             })
         }, delayTime)
     }
