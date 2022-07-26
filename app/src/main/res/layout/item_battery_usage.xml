@@ -6,7 +6,7 @@
     android:background="@color/purple_500">
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/my_image_view"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="@dimen/margin_very_large"
@@ -23,12 +23,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_very_large"
         android:layout_marginBottom="4sp"
-        android:text="aaaaaaa"
         android:textColor="@color/quite_white"
         android:textSize="@dimen/normal_text"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
-        app:layout_constraintStart_toEndOf="@+id/imageView6" />
+        app:layout_constraintStart_toEndOf="@+id/my_image_view" />
 
 
     <TextView
@@ -37,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4sp"
         android:layout_marginEnd="@dimen/margin_very_large"
-        android:text="tttttt"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline10" />
@@ -48,7 +46,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_very_large"
         android:layout_marginBottom="4sp"
-        android:text="fffffffff"
         android:textColor="@color/white"
         android:textSize="@dimen/small_size_text"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
@@ -65,8 +62,17 @@
         android:max="100"
         android:progress="45"
         app:layout_constraintEnd_toStartOf="@+id/text_percent"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
+        app:layout_constraintStart_toEndOf="@+id/my_image_view"
         app:layout_constraintTop_toTopOf="@+id/guideline10" />
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/line"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text_percent"
+        app:layout_constraintStart_toStartOf="@+id/my_image_view" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline10"

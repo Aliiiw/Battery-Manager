@@ -8,11 +8,9 @@ import android.graphics.Color
 import android.os.BatteryManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.alirahimi.batterymanager.utils.BatteryUsage
+import android.view.Gravity
 import com.alirahimi.batterymanager.databinding.ActivityMainBinding
-import com.alirahimi.batterymanager.model.BatteryModel
-import java.util.ArrayList
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,6 +22,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+
+        binding.imageMenu.setOnClickListener {
+            binding.drawer.openDrawer(Gravity.LEFT)
+        }
+
+        binding.includeDrawer.textAppUsage.setOnClickListener {
+            startActivity(Intent(this@MainActivity, UsageBatteryActivity::class.java))
+            binding.drawer.closeDrawer(Gravity.LEFT)
+        }
 
         registerReceiver(batteryDataReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
@@ -56,11 +64,11 @@ class MainActivity : AppCompatActivity() {
             }
             binding.circularProgressBar.progressMax = 100F
             binding.circularProgressBar.setProgressWithAnimation(batteryLevel)
-            if (batteryLevel < 15.0){
+            if (batteryLevel < 15.0) {
                 binding.circularProgressBar.progressBarColor = Color.RED
-            } else if (batteryLevel < 50.0){
+            } else if (batteryLevel < 50.0) {
                 binding.circularProgressBar.progressBarColor = Color.YELLOW
-            }else{
+            } else {
                 binding.circularProgressBar.progressBarColor = Color.GREEN
             }
         }

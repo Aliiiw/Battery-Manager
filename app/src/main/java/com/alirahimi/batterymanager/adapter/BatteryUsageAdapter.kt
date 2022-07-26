@@ -1,14 +1,14 @@
 package com.alirahimi.batterymanager.adapter
 
-import android.annotation.SuppressLint
-import android.app.Application
+
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.util.Log
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -40,10 +40,16 @@ class BatteryUsageAdapter(
 
 
     override fun onBindViewHolder(holder: BatteryUsageAdapter.ViewHolder, position: Int) {
+
         holder.textTime.text = batteryFinalList[position].timeUsage
+
         holder.textPercent.text = batteryFinalList[position].percentUsage.toString() + " %"
+
         holder.textAppName.text = getAppName(batteryFinalList[position].packageName.toString())
+
         holder.progressBar.progress = batteryFinalList[position].percentUsage
+
+        holder.myImageView.setImageDrawable(getAppIcon(batteryFinalList[position].packageName.toString()))
 
 
     }
@@ -57,6 +63,7 @@ class BatteryUsageAdapter(
         var textTime: TextView = view.findViewById(R.id.text_time)
         var textAppName: TextView = view.findViewById(R.id.text_app_name)
         var progressBar: ProgressBar = view.findViewById(R.id.progress_bar)
+        var myImageView: ImageView = view.findViewById(R.id.my_image_view)
 
     }
 
@@ -75,14 +82,17 @@ class BatteryUsageAdapter(
 
             batteryModel.packageName = item.first
             batteryModel.percentUsage = item.second
-            batteryModel.timeUsage = "$hourTime hours $minutesTime minutes"
+            if (hourTime == 0) {
+                batteryModel.timeUsage = "$minutesTime minutes"
+            } else batteryModel.timeUsage = "$hourTime hours $minutesTime minutes"
+
 
             finalList += batteryModel
         }
         return finalList
     }
 
-    fun getAppName(packageName: String): String {
+    private fun getAppName(packageName: String): String {
         val packageManager = context.applicationContext.packageManager
         val appInfo: ApplicationInfo? = try {
             packageManager.getApplicationInfo(packageName, 0)
@@ -90,5 +100,17 @@ class BatteryUsageAdapter(
             null
         }
         return (if (appInfo != null) packageManager.getApplicationLabel(appInfo) else "(unknown app)") as String
+    }
+
+    private fun getAppIcon(packageName: String): Drawable? {
+        var icon: Drawable? = null
+        try {
+            icon = context.packageManager.getApplicationIcon(packageName)
+
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+
+        return icon
     }
 }

@@ -4,8 +4,8 @@
     package="com.alirahimi.batterymanager">
 
     <uses-permission
-        android:name="android.permission.PACKAGE_USAGE_STATS"
-        tools:ignore="ProtectedPermissions" />
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
 
 
     <application
@@ -17,17 +17,17 @@
         android:theme="@style/Theme.BatteryManager">
         <activity
             android:name=".activity.UsageBatteryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity
-            android:name=".activity.SplashActivity"
-            android:exported="true" />
+
         <activity
             android:name=".activity.MainActivity"
             android:exported="true" />
