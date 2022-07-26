@@ -1,4 +1,4 @@
-package com.alirahimi.batterymanager
+package com.alirahimi.batterymanager.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

@@ -1,6 +1,5 @@
-package com.alirahimi.batterymanager
+package com.alirahimi.batterymanager.activity
 
-import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -9,7 +8,10 @@ import android.os.BatteryManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.alirahimi.batterymanager.utils.BatteryUsage
 import com.alirahimi.batterymanager.databinding.ActivityMainBinding
+import com.alirahimi.batterymanager.model.BatteryModel
+import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,10 +24,25 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val batteryUsage = BatteryUsage(this).getUsageStateList()
+        val batteryUsage = BatteryUsage(this)
 
-        for (item in batteryUsage){
-            Log.e("3636", item.packageName + " : " + item.totalTimeInForeground)
+        val batteryPercents: MutableList<BatteryModel> = ArrayList()
+        for (item in batteryUsage.getUsageStateList()) {
+
+            if (item.totalTimeInForeground > 0) {
+                val batteryModel = BatteryModel()
+                batteryModel.packageName = item.packageName
+                batteryModel.percentUsage =
+                    (item.totalTimeInForeground.toFloat() / batteryUsage.getTotalTime()
+                        .toFloat() * 100).toInt()
+                batteryPercents += batteryModel
+            }
+        }
+
+        var sortedList = batteryPercents.sortedWith(compareBy { it.percentUsage }).reversed()
+
+        for (item in sortedList) {
+            Log.e("3636", item.packageName + " : " + item.percentUsage)
         }
         registerReceiver(batteryDataReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
@@ -50,10 +67,11 @@ class MainActivity : AppCompatActivity() {
 
             val batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0).toFloat()
 
-            if(batteryLevel == 100F){
+            if (batteryLevel == 100F) {
                 binding.textLight.text = "Full Charge"
-            }else{
-                binding.textLight.text = (intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)).toString() + " %"
+            } else {
+                binding.textLight.text =
+                    (intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)).toString() + " %"
             }
             binding.circularProgressBar.progressMax = 100F
             binding.circularProgressBar.setProgressWithAnimation(batteryLevel)

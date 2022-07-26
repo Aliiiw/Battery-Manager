@@ -1,4 +1,4 @@
-package com.alirahimi.batterymanager
+package com.alirahimi.batterymanager.utils
 
 import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
@@ -32,6 +32,14 @@ class BatteryUsage(context: Context) {
 
     private fun getUsageStatsManager(context: Context): UsageStatsManager {
         return context.getSystemService("usagestats") as UsageStatsManager
+    }
+
+    fun getTotalTime(): Long {
+        var totalTime: Long = 0
+        for (item in getUsageStateList()) {
+            totalTime += item.totalTimeInForeground
+        }
+        return totalTime
     }
 
 }
