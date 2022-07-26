@@ -9,11 +9,10 @@
         android:id="@+id/testHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="dfbadfba"
         android:background="@color/black"
         android:padding="@dimen/large_text"
-        app:layout_constraintEnd_toEndOf="parent"
         android:textColor="@color/quite_white"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
