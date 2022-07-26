@@ -1,5 +1,6 @@
 package com.alirahimi.batterymanager.adapter
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import com.alirahimi.batterymanager.R
 import com.alirahimi.batterymanager.model.BatteryModel
 
 class BatteryUsageAdapter(
+
     private val battery: MutableList<BatteryModel>,
     private val totalTime: Long
 ) :
@@ -30,9 +32,11 @@ class BatteryUsageAdapter(
         return ViewHolder(listItem)
     }
 
+
     override fun onBindViewHolder(holder: BatteryUsageAdapter.ViewHolder, position: Int) {
-        holder.test.text =
-            "${batteryFinalList[position].packageName} : ${batteryFinalList[position].percentUsage} : ${batteryFinalList[position].timeUsage}"
+        holder.textPercent.text = batteryFinalList[position].percentUsage.toString() + " %"
+        holder.textTime.text = batteryFinalList[position].timeUsage
+        //"${batteryFinalList[position].packageName} : ${} : ${}"
     }
 
     override fun getItemCount(): Int {
@@ -40,7 +44,9 @@ class BatteryUsageAdapter(
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var test: TextView = view.findViewById(R.id.testHeader)
+        var textPercent: TextView = view.findViewById(R.id.text_percent)
+        var textTime: TextView = view.findViewById(R.id.text_time)
+
     }
 
     fun calculateBatteryUsage(batteryPercents: MutableList<BatteryModel>): MutableList<BatteryModel> {
@@ -58,7 +64,7 @@ class BatteryUsageAdapter(
 
             batteryModel.packageName = item.first
             batteryModel.percentUsage = item.second
-            batteryModel.timeUsage = "$hourTime:$minutesTime"
+            batteryModel.timeUsage = "$hourTime hours $minutesTime minutes"
 
             finalList += batteryModel
         }

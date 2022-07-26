@@ -1,20 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@color/purple_500">
 
-    <TextView
-        android:id="@+id/testHeader"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/black"
-        android:padding="@dimen/large_text"
-        android:textColor="@color/quite_white"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="@dimen/margin_very_large"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/text_app_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_very_large"
+        android:layout_marginBottom="4sp"
+        android:text="aaaaaaa"
+        android:textColor="@color/quite_white"
+        android:textSize="@dimen/normal_text"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
+        app:layout_constraintStart_toEndOf="@+id/imageView6" />
+
+
+    <TextView
+        android:id="@+id/text_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4sp"
+        android:layout_marginEnd="@dimen/margin_very_large"
+        android:text="tttttt"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline10" />
+
+    <TextView
+        android:id="@+id/text_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_very_large"
+        android:layout_marginBottom="4sp"
+        android:textSize="@dimen/small_size_text"
+        android:text="fffffffff"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_very_large"
+        android:layout_marginTop="8sp"
+        android:layout_marginEnd="@dimen/margin_very_large"
+        android:max="100"
+        android:progress="45"
+        app:layout_constraintEnd_toStartOf="@+id/text_percent"
+        app:layout_constraintStart_toEndOf="@+id/imageView6"
+        app:layout_constraintTop_toTopOf="@+id/guideline10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
