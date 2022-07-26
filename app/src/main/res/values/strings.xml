@@ -4,6 +4,6 @@
     <string name="check_your_battery_state">Check your battery state</string>
     <string name="voltage">Voltage</string>
     <string name="technology">Technology</string>
-    <string name="plugged_in">Plugged in</string>
+    <string name="plugged_Status">Plugged Status</string>
     <string name="temperature">Temperature</string>
 </resources>

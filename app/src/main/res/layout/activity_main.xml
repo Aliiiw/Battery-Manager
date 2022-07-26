@@ -102,11 +102,10 @@
             app:layout_constraintTop_toTopOf="@+id/imageView" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/text_voltage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="25"
             android:textColor="@color/quite_white_alpha"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
@@ -134,11 +133,12 @@
             app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
         <TextView
+            android:id="@+id/text_cpu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="24"
             android:textColor="@color/quite_white_alpha"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/imageView2"
             app:layout_constraintStart_toEndOf="@+id/imageView2" />
 
@@ -157,18 +157,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="@string/plugged_in"
+            android:text="@string/plugged_Status"
             android:textColor="@color/quite_white_alpha"
             android:textSize="@dimen/normal_text"
             app:layout_constraintStart_toEndOf="@+id/imageView3"
             app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
         <TextView
+            android:id="@+id/text_plug"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="24"
             android:textColor="@color/quite_white_alpha"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/imageView3"
             app:layout_constraintStart_toEndOf="@+id/imageView3" />
 
@@ -193,11 +194,12 @@
             app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
         <TextView
+            android:id="@+id/text_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="24"
             android:textColor="@color/quite_white_alpha"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/imageView4"
             app:layout_constraintStart_toEndOf="@+id/imageView4" />
 
