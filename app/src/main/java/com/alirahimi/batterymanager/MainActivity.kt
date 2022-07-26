@@ -22,6 +22,11 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        val batteryUsage = BatteryUsage(this).getUsageStateList()
+
+        for (item in batteryUsage){
+            Log.e("3636", item.packageName + " : " + item.totalTimeInForeground)
+        }
         registerReceiver(batteryDataReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
     }
