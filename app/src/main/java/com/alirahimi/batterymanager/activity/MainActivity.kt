@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import android.os.BatteryManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -86,7 +87,13 @@ class MainActivity : AppCompatActivity() {
             }
             binding.circularProgressBar.progressMax = 100F
             binding.circularProgressBar.setProgressWithAnimation(batteryLevel)
-
+            if (batteryLevel < 15.0){
+                binding.circularProgressBar.progressBarColor = Color.RED
+            } else if (batteryLevel < 50.0){
+                binding.circularProgressBar.progressBarColor = Color.YELLOW
+            }else{
+                binding.circularProgressBar.progressBarColor = Color.GREEN
+            }
         }
     }
 }
