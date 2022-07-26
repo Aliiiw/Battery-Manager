@@ -48,13 +48,14 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_very_large"
         android:layout_marginBottom="4sp"
-        android:textSize="@dimen/small_size_text"
         android:text="fffffffff"
         android:textColor="@color/white"
+        android:textSize="@dimen/small_size_text"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ProgressBar
+        android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

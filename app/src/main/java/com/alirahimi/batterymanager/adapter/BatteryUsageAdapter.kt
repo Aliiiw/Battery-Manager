@@ -1,10 +1,15 @@
 package com.alirahimi.batterymanager.adapter
 
 import android.annotation.SuppressLint
+import android.app.Application
+import android.content.Context
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.alirahimi.batterymanager.R
@@ -12,6 +17,7 @@ import com.alirahimi.batterymanager.model.BatteryModel
 
 class BatteryUsageAdapter(
 
+    private val context: Context,
     private val battery: MutableList<BatteryModel>,
     private val totalTime: Long
 ) :
@@ -34,9 +40,12 @@ class BatteryUsageAdapter(
 
 
     override fun onBindViewHolder(holder: BatteryUsageAdapter.ViewHolder, position: Int) {
-        holder.textPercent.text = batteryFinalList[position].percentUsage.toString() + " %"
         holder.textTime.text = batteryFinalList[position].timeUsage
-        //"${batteryFinalList[position].packageName} : ${} : ${}"
+        holder.textPercent.text = batteryFinalList[position].percentUsage.toString() + " %"
+        holder.textAppName.text = getAppName(batteryFinalList[position].packageName.toString())
+        holder.progressBar.progress = batteryFinalList[position].percentUsage
+
+
     }
 
     override fun getItemCount(): Int {
@@ -46,12 +55,14 @@ class BatteryUsageAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var textPercent: TextView = view.findViewById(R.id.text_percent)
         var textTime: TextView = view.findViewById(R.id.text_time)
+        var textAppName: TextView = view.findViewById(R.id.text_app_name)
+        var progressBar: ProgressBar = view.findViewById(R.id.progress_bar)
 
     }
 
-    fun calculateBatteryUsage(batteryPercents: MutableList<BatteryModel>): MutableList<BatteryModel> {
+    private fun calculateBatteryUsage(batteryPercents: MutableList<BatteryModel>): MutableList<BatteryModel> {
         val finalList: MutableList<BatteryModel> = ArrayList()
-        var sortedList =
+        val sortedList =
             batteryPercents.groupBy { it.packageName }.mapValues { entry ->
                 entry.value.sumBy { it.percentUsage }
             }.toList().sortedWith(compareBy { it.second }).reversed()
@@ -69,5 +80,15 @@ class BatteryUsageAdapter(
             finalList += batteryModel
         }
         return finalList
+    }
+
+    fun getAppName(packageName: String): String {
+        val packageManager = context.applicationContext.packageManager
+        val appInfo: ApplicationInfo? = try {
+            packageManager.getApplicationInfo(packageName, 0)
+        } catch (e: PackageManager.NameNotFoundException) {
+            null
+        }
+        return (if (appInfo != null) packageManager.getApplicationLabel(appInfo) else "(unknown app)") as String
     }
 }
