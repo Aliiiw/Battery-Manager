@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2304403591278324" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_usage_battery.xml" value="0.2629193109700816" />
+        <entry key="app/src/main/res/layout/item_battery_usage.xml" value="0.335" />
       </map>
     </option>
   </component>

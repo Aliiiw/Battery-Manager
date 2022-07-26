@@ -17,16 +17,17 @@
         android:theme="@style/Theme.BatteryManager">
         <activity
             android:name=".activity.UsageBatteryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        <activity
+            android:name=".activity.SplashActivity"
+            android:exported="true" />
         <activity
             android:name=".activity.MainActivity"
             android:exported="true" />
