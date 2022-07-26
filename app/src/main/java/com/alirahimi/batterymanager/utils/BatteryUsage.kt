@@ -5,7 +5,7 @@ import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
-import java.util.*
+
 
 class BatteryUsage(context: Context) {
     private val myContext = context
@@ -22,17 +22,17 @@ class BatteryUsage(context: Context) {
 
     fun getUsageStateList(): List<UsageStats> {
         val usm = getUsageStatsManager(myContext)
-        val calendar = Calendar.getInstance()
-        val endTime = calendar.timeInMillis
-        calendar.add(Calendar.YEAR, -1)
-        val startTime = calendar.timeInMillis
-        return usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, startTime, endTime)
+        val startTime = System.currentTimeMillis() - (24 * 3600 * 1000)
+        val endTime = System.currentTimeMillis()
 
+        return usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, startTime, endTime)
     }
+
 
     private fun getUsageStatsManager(context: Context): UsageStatsManager {
         return context.getSystemService("usagestats") as UsageStatsManager
     }
+
 
     fun getTotalTime(): Long {
         var totalTime: Long = 0
