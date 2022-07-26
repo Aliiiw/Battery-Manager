@@ -9,5 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="quite_purple">#A41B1725</color>
     <color name="quite_white">#FEFEFE</color>
+    <color name="quite_white2">#B3FEFEFE</color>
     <color name="quite_white_alpha">#CCFEFEFE</color>
+    <color name="yellow">#F3DB0E</color>
 </resources>

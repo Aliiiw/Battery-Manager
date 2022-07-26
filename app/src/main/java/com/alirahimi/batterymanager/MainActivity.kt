@@ -41,6 +41,18 @@ class MainActivity : AppCompatActivity() {
             } else {
                 binding.textPlug.text = "Plugged-In"
             }
+
+
+            val batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0).toFloat()
+
+            if(batteryLevel == 100F){
+                binding.textLight.text = "Full Charge"
+            }else{
+                binding.textLight.text = (intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)).toString() + " %"
+            }
+            binding.circularProgressBar.progressMax = 100F
+            binding.circularProgressBar.setProgressWithAnimation(batteryLevel)
+
         }
     }
 }
