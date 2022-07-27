@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.alirahimi.batterymanager">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
@@ -31,6 +32,12 @@
         <activity
             android:name=".activity.MainActivity"
             android:exported="true" />
+
+        <service
+            android:name=".services.BatteryAlarmService"
+            android:enabled="true"
+            android:exported="true" />
+
     </application>
 
 </manifest>

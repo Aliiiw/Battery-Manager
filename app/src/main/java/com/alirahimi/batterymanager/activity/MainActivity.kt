@@ -10,8 +10,10 @@ import android.os.BatteryManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
+import androidx.core.content.ContextCompat
 import com.alirahimi.batterymanager.R
 import com.alirahimi.batterymanager.databinding.ActivityMainBinding
+import com.alirahimi.batterymanager.services.BatteryAlarmService
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        startService()
 
 
         binding.imageMenu.setOnClickListener {
@@ -114,5 +117,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun startService() {
+        val serviceIntent = Intent(this, BatteryAlarmService::class.java)
+        ContextCompat.startForegroundService(this, serviceIntent)
     }
 }
