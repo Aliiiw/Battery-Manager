@@ -1,16 +1,14 @@
 package com.alirahimi.batterymanager.activity
 
 import android.annotation.SuppressLint
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.graphics.Color
 import android.os.BatteryManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.alirahimi.batterymanager.R
 import com.alirahimi.batterymanager.databinding.ActivityMainBinding
@@ -22,13 +20,24 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    @SuppressLint("RtlHardcoded", "SetTextI18n")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+
+        initialDrawer()
+
+        registerReceiver(batteryDataReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+
+    }
+
+
+    @SuppressLint("RtlHardcoded", "SetTextI18n")
+    private fun initialDrawer() {
 
         binding.imageMenu.setOnClickListener {
             binding.drawer.openDrawer(Gravity.LEFT)
@@ -39,8 +48,12 @@ class MainActivity : AppCompatActivity() {
             binding.drawer.closeDrawer(Gravity.LEFT)
         }
 
-        registerReceiver(batteryDataReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        serviceConfig()
 
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun serviceConfig() {
 
         if (SharedPreferencedManager.isServiceOn(this@MainActivity) == true) {
             binding.includeDrawer.textService.text = "Service is On"
@@ -145,5 +158,24 @@ class MainActivity : AppCompatActivity() {
     private fun stopService() {
         val serviceIntent = Intent(this, BatteryAlarmService::class.java)
         stopService(serviceIntent)
+    }
+
+    override fun onBackPressed() {
+
+        val dialogBuilder = AlertDialog.Builder(this)
+            .setMessage("Do you want to Exit from app?")
+            .setCancelable(true)
+            .setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, id ->
+                finish()
+            })
+            .setNegativeButton("No", DialogInterface.OnClickListener { dialog, id ->
+                dialog.cancel()
+            })
+
+        val alert = dialogBuilder.create()
+        alert.setTitle("Exit App")
+        alert.show()
+
+
     }
 }
