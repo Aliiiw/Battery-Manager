@@ -15,7 +15,7 @@ import androidx.core.app.NotificationCompat
 import com.alirahimi.batterymanager.R
 
 class BatteryAlarmService : Service() {
-    var manager: NotificationManager? = null
+    private var manager: NotificationManager? = null
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         createNotificationChannel()
         startNotification()
@@ -70,13 +70,17 @@ class BatteryAlarmService : Service() {
         @SuppressLint("SetTextI18n")
         override fun onReceive(context: Context, intent: Intent) {
 
+            var batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
 
+            var plugState = ""
             if (intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) == 0) {
                 //binding.textPlug.text = "Not-Plugged"
+                plugState = "your phone on Battery charge"
             } else {
                 //binding.textPlug.text = "Plugged-In"
+                plugState = "your phone is charging using cable"
             }
-            updateNotification(batteryLevel = )
+            updateNotification(batteryLevel, plugState)
         }
     }
 
