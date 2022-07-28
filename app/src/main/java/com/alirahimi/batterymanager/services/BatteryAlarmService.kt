@@ -6,11 +6,11 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.os.IBinder
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.BatteryManager
-import android.os.Build
+import android.media.RingtoneManager
+import android.net.Uri
+import android.os.*
 import androidx.core.app.NotificationCompat
 import com.alirahimi.batterymanager.R
 
@@ -72,16 +72,39 @@ class BatteryAlarmService : Service() {
 
             var batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
 
+
             var plugState = ""
             if (intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) == 0) {
-                //binding.textPlug.text = "Not-Plugged"
+
                 plugState = "your phone on Battery charge"
             } else {
-                //binding.textPlug.text = "Plugged-In"
+
                 plugState = "your phone is charging using cable"
             }
+
+
+            if (batteryLevel > 97) {
+                startAlarm()
+                plugState = "your phone is fully charged!"
+
+            }
+
             updateNotification(batteryLevel, plugState)
         }
     }
 
+    private fun startAlarm() {
+        val alarm: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val ring = RingtoneManager.getRingtone(applicationContext, alarm)
+        ring.play()
+
+        val vibrate = getSystemService(VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) vibrate.vibrate(
+            VibrationEffect.createOneShot(
+                1500,
+                VibrationEffect.DEFAULT_AMPLITUDE
+            )
+        )
+        else vibrate.vibrate(1500)
+    }
 }
