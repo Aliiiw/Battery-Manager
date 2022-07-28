@@ -31,10 +31,10 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
 
-        android:src="@drawable/plug"
+        android:src="@drawable/usage"
         app:layout_constraintStart_toStartOf="@+id/guideline14"
         app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
@@ -55,13 +55,36 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="App Usage"
+        android:text="@string/app_usage"
         android:id="@+id/text_app_usage"
         android:textColor="@color/quite_white"
-        android:layout_marginLeft="@dimen/large_text"
+        android:layout_marginStart="@dimen/large_text"
         android:textSize="@dimen/normal_text"
         app:layout_constraintBottom_toBottomOf="@+id/imageView7"
         app:layout_constraintStart_toEndOf="@+id/imageView7"
         app:layout_constraintTop_toTopOf="@+id/guideline11" />
+
+    <Switch
+        android:id="@+id/switcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_text"
+        app:layout_constraintStart_toStartOf="@+id/guideline14"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <TextView
+        android:id="@+id/text_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Service is Off"
+        android:textColor="@color/quite_white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/switcher"
+        app:layout_constraintStart_toEndOf="@+id/switcher"
+        app:layout_constraintTop_toTopOf="@+id/switcher"
+        app:layout_constraintVertical_bias="0.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

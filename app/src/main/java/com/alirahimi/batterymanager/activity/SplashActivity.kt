@@ -3,7 +3,9 @@ package com.alirahimi.batterymanager.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.alirahimi.batterymanager.databinding.ActivitySplashBinding
+import com.alirahimi.batterymanager.sharedPreferences.SharedPreferencedManager
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -13,6 +15,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivitySplashBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -27,8 +30,8 @@ class SplashActivity : AppCompatActivity() {
             startActivity(Intent(this@SplashActivity, MainActivity::class.java))
             finish()
         }, 4000)
-
     }
+
 
     private fun textGenerator(delayTime: Long, textToShow: String) {
         Timer().schedule(timerTask {

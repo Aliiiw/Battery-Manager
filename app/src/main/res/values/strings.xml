@@ -6,4 +6,5 @@
     <string name="technology">Technology</string>
     <string name="plugged_Status">Plugged Status</string>
     <string name="temperature">Temperature</string>
+    <string name="app_usage">App Usage</string>
 </resources>

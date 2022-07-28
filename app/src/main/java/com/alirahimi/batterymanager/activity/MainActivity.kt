@@ -10,25 +10,25 @@ import android.os.BatteryManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.alirahimi.batterymanager.R
 import com.alirahimi.batterymanager.databinding.ActivityMainBinding
 import com.alirahimi.batterymanager.services.BatteryAlarmService
+import com.alirahimi.batterymanager.sharedPreferences.SharedPreferencedManager
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    @SuppressLint("RtlHardcoded")
+    @SuppressLint("RtlHardcoded", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        startService()
-
 
         binding.imageMenu.setOnClickListener {
             binding.drawer.openDrawer(Gravity.LEFT)
@@ -41,7 +41,31 @@ class MainActivity : AppCompatActivity() {
 
         registerReceiver(batteryDataReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
+
+        if (SharedPreferencedManager.isServiceOn(this@MainActivity) == true) {
+            binding.includeDrawer.textService.text = "Service is On"
+            binding.includeDrawer.switcher.isChecked = true
+            startService()
+        } else {
+            binding.includeDrawer.textService.text = "Service is Off"
+            binding.includeDrawer.switcher.isChecked = false
+            stopService()
+        }
+
+        binding.includeDrawer.switcher.setOnCheckedChangeListener { switch, isChecked ->
+            SharedPreferencedManager.setServiceStat(this@MainActivity, isChecked)
+            if (isChecked) {
+                startService()
+                binding.includeDrawer.textService.text = "Service is On"
+                Toast.makeText(applicationContext, "Service is On now!", Toast.LENGTH_SHORT).show()
+            } else {
+                stopService()
+                Toast.makeText(applicationContext, "Service is Off now!", Toast.LENGTH_SHORT).show()
+                binding.includeDrawer.textService.text = "Service is Off"
+            }
+        }
     }
+
 
     private var batteryDataReceiver: BroadcastReceiver = object : BroadcastReceiver() {
 
@@ -54,33 +78,27 @@ class MainActivity : AppCompatActivity() {
                 (intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0) / 1000).toString() + " volt"
 
             binding.textCpu.text = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY)
-            if (intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) == 0) {
-                binding.textPlug.text = "Not-Plugged"
-            } else {
-                binding.textPlug.text = "Plugged-In"
-            }
+            if (intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) == 0) binding.textPlug.text =
+                "Not-Plugged"
+            else binding.textPlug.text = "Plugged-In"
 
 
             val batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0).toFloat()
 
-            if (batteryLevel == 100F) {
-                binding.textLight.text = "Full Charge"
-            } else {
-                binding.textLight.text =
-                    (intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)).toString() + " %"
-            }
+            if (batteryLevel == 100F) binding.textLight.text = "Full Charge"
+            else binding.textLight.text =
+                (intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)).toString() + " %"
+
             binding.circularProgressBar.progressMax = 100F
             binding.circularProgressBar.setProgressWithAnimation(batteryLevel)
-            if (batteryLevel < 15.0) {
-                binding.circularProgressBar.progressBarColor = Color.RED
-            } else if (batteryLevel < 50.0) {
-                binding.circularProgressBar.progressBarColor = Color.YELLOW
-            } else {
-                binding.circularProgressBar.progressBarColor = Color.GREEN
-            }
 
-            val health = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, 0)
-            when (health) {
+            if (batteryLevel < 15.0) binding.circularProgressBar.progressBarColor = Color.RED
+            else if (batteryLevel < 50.0) binding.circularProgressBar.progressBarColor =
+                Color.YELLOW
+            else binding.circularProgressBar.progressBarColor = Color.GREEN
+
+
+            when (intent.getIntExtra(BatteryManager.EXTRA_HEALTH, 0)) {
                 BatteryManager.BATTERY_HEALTH_DEAD -> {
                     binding.textHealth.text =
                         "your battery is fully Dead! Please change your battery"
@@ -122,5 +140,10 @@ class MainActivity : AppCompatActivity() {
     private fun startService() {
         val serviceIntent = Intent(this, BatteryAlarmService::class.java)
         ContextCompat.startForegroundService(this, serviceIntent)
+    }
+
+    private fun stopService() {
+        val serviceIntent = Intent(this, BatteryAlarmService::class.java)
+        stopService(serviceIntent)
     }
 }
